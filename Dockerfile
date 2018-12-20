@@ -32,11 +32,11 @@ RUN echo "export PATH=~/.npm-global/bin:$PATH" >> /home/wormhole/.profile
 RUN runuser -l wormhole -c "npm config set prefix '~/.npm-global'"
 
 # Install dependencies for building full node from source
-RUN apt-get install -y build-essential libtool autotools-dev automake \
-  pkg-config libssl-dev libevent-dev bsdmainutils libminiupnpc-dev libzmq3-dev \
-  libboost-all-dev libdb++-dev libboost-system-dev libboost-filesystem-dev \
-  libboost-chrono-dev libboost-program-options-dev libboost-test-dev \
-  libboost-thread-dev
+#RUN apt-get install -y build-essential libtool autotools-dev automake \
+#  pkg-config libssl-dev libevent-dev bsdmainutils libminiupnpc-dev libzmq3-dev \
+#  libboost-all-dev libdb++-dev libboost-system-dev libboost-filesystem-dev \
+#  libboost-chrono-dev libboost-program-options-dev libboost-test-dev \
+#  libboost-thread-dev
 
 
 RUN mkdir /home/wormhole/.bitcoin
@@ -46,18 +46,25 @@ COPY config/testnet-example/bitcoin.conf /home/wormhole/.bitcoin/bitcoin.conf
 #COPY config/mainnet-example/bitcoin.conf /home/wormhole/.bitcoin/bitcoin.conf
 
 # Clone the coppernet fork of the bitcoin-abc wormhole BCH full node
-RUN git clone https://github.com/copernet/wormhole.git
+#RUN git clone https://github.com/copernet/wormhole.git
 
 # Generate build.h
-WORKDIR /home/wormhole/wormhole/share
-RUN ./genbuild.sh ../src/obj/build.h
+#WORKDIR /home/wormhole/wormhole/share
+#RUN ./genbuild.sh ../src/obj/build.h
 
 # Build the binaries
-WORKDIR /home/wormhole/wormhole
-RUN ./autogen.sh
-RUN ./configure
-RUN make
-RUN make install
+#WORKDIR /home/wormhole/wormhole
+#RUN ./autogen.sh
+#RUN ./configure
+#RUN make
+#RUN make install
+
+# Download the 0.2.2 wormhole full node binary
+RUN wget https://wormhole.cash/download/0.2.2/linux_wormhole/wormhole-0.2.2-x86_64-linux-gnu.tar.gz
+RUN tar -xvf wormhole-0.2.2-x86_64-linux-gnu.tar.gz
+RUN mv /home/wormhole/wormhole-0.2.2 /home/wormhole/wormhole
+
+
 
 #Create a directory for holding blockchain data
 VOLUME /home/wormhole/blockchain-data
@@ -79,7 +86,8 @@ USER wormhole
 
 
 # Startup bitcore, wormhole, and the full node.
-CMD ["/home/wormhole/wormhole/src/wormholed"]
+#CMD ["/home/wormhole/wormhole/src/wormholed"]
+CMD ["/home/wormhole/wormhole/bin/wormholed"]
 
 #COPY finalsetup finalsetup
 #ENTRYPOINT ["./finalsetup", "/home/wormhole/.npm-global/bin/bitcore", "start"]
