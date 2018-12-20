@@ -1,2 +1,2 @@
 #!/bin/bash
-docker stop wormhole-node
+docker stop wormhole-node-bin

@@ -1,2 +1,2 @@
 #!/bin/bash
-docker build -t wormhole-node .
+docker build -t wormhole-node-bin .

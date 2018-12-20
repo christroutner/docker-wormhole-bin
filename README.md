@@ -1,14 +1,16 @@
 # wormhole-docker
 This repository contains a Dockerfile and bash shell scripts for building
 a Wormhole full node on the Bitcoin Cash (BCH) network. By default, this node
-is setup for **testnet**, and the setup is based on
-[this Bitcoin.com tutorial](https://developer.bitcoin.com/tutorials/wormhole-2-full-node.html).
+is setup for **testnet**. This repo was forked from
+[wormhole-docker](https://github.com/christroutner/wormhole-docker). That repo
+builds the Wormhole full node from source, whereas this repo creates the full
+node from an officially release binary.
 
 
 ## Installation
 These directions are geared at Ubuntu 18.04 OS with at least 2GB of RAM,
 and a non-root user with sudo privileges.
-The testnet blockchain data takes up about 25GB of space.
+The testnet blockchain data takes up about 20GB of space.
 Your mileage may vary.
 
 1. It's always a good idea to add
@@ -21,11 +23,11 @@ shows how to install Docker on a Ubuntu system.
 
 3. Clone this repository:
 
-`git clone https://github.com/christroutner/wormhole-docker && cd wormhole-docker`
+`git clone https://github.com/christroutner/docker-wormhole-bin && cd docker-wormhole-bin`
 
-* Create a `blockchain-data` directory in your home directory:
+* Create a `wh-blockchain-data` directory in your home directory:
 
-`mkdir ~/blockchain-data`
+`mkdir ~/wh-blockchain-data`
 
 * Build the Docker images by running the 'build' shell script:
 
@@ -35,10 +37,4 @@ shows how to install Docker on a Ubuntu system.
 
 `./run-image`
 
-* After the blockchain syncs, you can access the insight server at port 3001.
-You can check on progress with the command `docker logs wormhole-node`.
-
-
-## Ideas for future improvement:
-* Expand the setup for mainnet
-* Push image to Docker Hub for easy download (~3.5 GB)
+* You can check on progress with the command `docker logs wormhole-node`.
